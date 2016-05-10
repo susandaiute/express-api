@@ -19,20 +19,23 @@ const show = (req, res, next) => {
 };
 
 const create = (req, res, next) => {
-  let book = Object.assign({ _owner: req.currentUser._id }, req.body.book);
+  let book = Object.assign(req.body.book, {
+    _owner: req.currentUser._id,
+  });
   Book.create(book)
     .then(book => res.json({ book }))
     .catch(err => next(err));
 };
 
 const update = (req, res, next) => {
-  let bookByUser = {_id: req.params.id, _owner: req.currentUser._id};
-  Book.findOneAndUpdate(bookByUser, req.body.book)
+  let search = { _id: req.params.id, _owner: req.currentUser._id };
+  Book.findOne(search)
     .then(book => {
       if (!book) {
         return next();
       }
 
+      delete req.body._owner;  // disallow owner reassignment.
       return book.update(req.body.book)
         .then(() => res.sendStatus(200));
     })
@@ -40,8 +43,8 @@ const update = (req, res, next) => {
 };
 
 const destroy = (req, res, next) => {
-  let bookByUser = {_id: req.params.id, _owner: req.currentUser._id};
-  Book.findOneAndRemove(bookByUser)
+  let search = { _id: req.params.id, _owner: req.currentUser._id };
+  Book.findOne(search)
     .then(book => {
       if (!book) {
         return next();
@@ -58,7 +61,7 @@ module.exports = controller({
   show,
   create,
   update,
-  destroy,
+  destroy
 }, { before: [
   { method: authenticate, except: ['index', 'show'] },
 ], });

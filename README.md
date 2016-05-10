@@ -32,6 +32,19 @@ By the end of this, developers should be able to:
 1.  [Fork and clone](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone)
     this repository.
 1.  Install dependencies with `npm install`.
+1.  Verify monogdb is runnning with `brew services list`
+  -  run `brew services restart mongodb` if not
+1.  Set a SECRET_KEY in the environment.
+1.  Run the API server with `npm start`. If you want your code to be reloaded on
+    change, you should `npm install -g nodemon` and use `nodemon` instead of
+    `npm start`.
+
+    For development and testing, set the SECRET_KEY from the root of your
+     repository using
+
+    ```sh
+    echo SECRET_KEY=$(/usr/local/opt/openssl/bin/openssl rand -base64 66 | tr -d '\n') >>.env
+    ```
 
 ## A Bookstore API
 
@@ -146,9 +159,9 @@ Content-Type: application/json; charset=utf-8
     "updatedAt": "2016-03-09T03:23:58.000Z",
     "createdAt": "2016-03-09T03:23:58.000Z",
     "_owner": "56df9716c19957cb0d836c4a",
-    "title": "Time Enough for Love",
-    "author": "Robert A. Heinlein",
-    "price": 8.99,
+    "title": "Invisible Monsters",
+    "author": "Chuck Palahniuk",
+    "price": 10.99,
     "_id": "56df974ec19957cb0d836c4d"
   }
 }
@@ -175,9 +188,9 @@ Content-Type: application/json; charset=utf-8
       "updatedAt": "2016-03-09T03:23:58.000Z",
       "createdAt": "2016-03-09T03:23:58.000Z",
       "_owner": "56df9716c19957cb0d836c4a",
-      "title": "The Name of the Wind",
-      "author": "Patrick Rothfuss",
-      "price": 8.99,
+      "title": "Between the World and Me",
+      "author": "Ta-Nehisi Coates",
+      "price": 12.99,
       "__v": 0
     },
     {
@@ -185,9 +198,9 @@ Content-Type: application/json; charset=utf-8
       "updatedAt": "2016-03-09T03:23:58.000Z",
       "createdAt": "2016-03-09T03:23:58.000Z",
       "_owner": "56df9716c19957cb0d836c4a",
-      "title": "Time Enough for Love",
-      "author": "Robert A. Heinlein",
-      "price": 8.99,
+      "title": "Invisible Monsters",
+      "author": "Chuck Palahniuk",
+      "price": 10.99,
       "__v": 0
     }
   ]
@@ -214,15 +227,15 @@ Content-Type: application/json; charset=utf-8
     "updatedAt": "2016-03-09T03:23:58.000Z",
     "createdAt": "2016-03-09T03:23:58.000Z",
     "_owner": "56df9716c19957cb0d836c4a",
-    "title": "The Name of the Wind",
-    "author": "Patrick Rothfuss",
-    "price": 8.99,
+    "title": "Between the World and Me",
+    "author": "Ta-Nehisi Coates",
+    "price": 12.99,
     "__v": 0
   }
 }
 ```
 
-## Lab: `PATCH /books`
+## Lab: `PATCH /books/:id`
 
 Only authenticated users should be able to change a book. They should not be
 able to change other users' books.
