@@ -73,6 +73,8 @@ object. The `res` object is
 [http.ServerResponse](https://nodejs.org/api/http.html#http_class_http_serverresponse)
 object. These are what we used in the node HTTP server. What about `next`?
 
+**You likely won't see `next` outside of pushing errors forward**
+
 > More than one callback function can handle a route (make sure you specify the
 > next object).
 >
@@ -119,9 +121,24 @@ following questions together:
 
 -   What library are we using to model our resources? Does it have anything to
     do with Express?
+
+    **Mongoose - nothing to do with Express**
+
+    **We're using it as our ORM for Express**
+
 -   What does the underscore denote in `_owner`?
+
+    **It is a property of Example that we will never explicitly set**
+
+    **ref: User is setting the reference to the User model**
+
 -   Where should we go to find out more about an owner?
+
+    **User Model**
+
 -   Why aren't we using an arrow function for the virtual attribute `length`?
+
+    **Because we're using `this`**
 
 ## Lab: Create an Example
 
