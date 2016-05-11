@@ -6,12 +6,15 @@ const Example = models.example;
 
 const authenticate = require('./concerns/authenticate');
 
+//show all examples
+//request, response, next
 const index = (req, res, next) => {
   Example.find()
     .then(examples => res.json({ examples }))
     .catch(err => next(err));
 };
 
+//show one by id
 const show = (req, res, next) => {
   Example.findById(req.params.id)
     .then(example => example ? res.json({ example }) : next())
